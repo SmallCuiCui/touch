@@ -1,7 +1,46 @@
 <!-- 文艺演出 -->
 <template>
   <div class="culture">
-    <el-carousel class="culture-container" :interval="5000" arrow="always">
+    <div class="culture-container">
+      <div class="swiper-container" id="gallery">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide culture-container-item" v-for="item in 4" :key="item.id">
+            <div class="culture-container-item_pic">
+              <p class="culture-container-item_pic_title">活动标题</p>
+            </div>
+            <div class="culture-container-item_text">
+              <h5 class="culture-container-item_text_title">精彩活动</h5>
+              <ul>
+                <li>
+                  <p>演出日</p>
+                  <h4 style="color: #F5A623;">(周日到周四)</h4>
+                  <p>演出时间</p>
+                  <h4>09:00-10:00</h4>
+                  <p>演出地点</p>
+                  <h4>游客服务中心广场</h4>
+                </li>
+                <li>
+                  <p>演出日</p>
+                  <h4 style="">(周日到周四)</h4>
+                  <p>演出时间</p>
+                  <h4>09:00-10:00</h4>
+                  <p>演出地点</p>
+                  <h4>游客服务中心广场</h4>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev">
+        <img src="../../assets/img/icons/leftc.webp" alt="">
+      </div>
+      <div class="swiper-button-next">
+        <img src="../../assets/img/icons/rightc.webp" alt="">
+      </div>
+    </div>
+    <!-- <el-carousel class="culture-container" :interval="5000" arrow="always">
       <el-carousel-item class="culture-container-item" v-for="item in 4" :key="item">
         <div class="culture-container-item_pic">
           <p class="culture-container-item_pic_title">活动标题</p>
@@ -11,7 +50,7 @@
           <ul>
             <li>
               <p>演出日</p>
-              <h4 style="color: '#F5A623';">(周日到周四)</h4>
+              <h4 style="color: #F5A623;">(周日到周四)</h4>
               <p>演出时间</p>
               <h4>09:00-10:00</h4>
               <p>演出地点</p>
@@ -19,7 +58,7 @@
             </li>
             <li>
               <p>演出日</p>
-              <h4 style="color: '#E06E6E';">(周日到周四)</h4>
+              <h4 style="">(周日到周四)</h4>
               <p>演出时间</p>
               <h4>09:00-10:00</h4>
               <p>演出地点</p>
@@ -28,11 +67,13 @@
           </ul>
         </div>
       </el-carousel-item>
-    </el-carousel>
+    </el-carousel> -->
   </div>
 </template>
 
 <script>
+import Swiper from 'swiper'
+import 'swiper/dist/css/swiper.min.css'
 export default {
   components: {},
 
@@ -43,24 +84,81 @@ export default {
 
   created() {},
 
-  mounted() {},
+  mounted() {
+    this.initSwiper()
+  },
 
-  methods: {}
+  methods: {
+    initSwiper() {
+      new Swiper('#gallery',{
+        // autoplay: true,
+        pagination: {
+          el: '.swiper-pagination',
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        }
+      })
+    }
+  }
 }
 
 </script>
 <style lang='scss'>
 .culture{
+  margin-top: 2.58rem;
   &-container{
     width: 15rem;
     height: 6rem;
-    overflow: hidden;
     background-color: #fff;
     margin: 1.2rem auto;
     position: relative;
-    .el-carousel__container{
-      width: 15rem;
+    .swiper-container{
+      width: 100%;
       height: 100%;
+      position: relative;
+      
+    }
+    .swiper-button-prev, .swiper-button-next{
+      width: 1.38rem;
+      height: 1.38rem;
+      position: absolute;
+      top: 2.25rem;
+      border: none;
+      color: #fff;
+      background:rgba(216,216,216,0.17);
+      border-radius: 50%;
+      outline: none;
+      img{
+        width: 100%;
+        height: 100%;
+        vertical-align: top;
+      }
+    }
+    .swiper-button-prev{
+      left: -1.92rem;
+    }
+    .swiper-button-next{
+      right: -1.92rem;
+    }
+    .swiper-pagination{
+      width: 5rem;
+      height: 30px;
+      bottom: -0.9rem;
+      left: 0;
+      right: 0;
+      margin: auto;
+      span{
+        width: 23px;
+        height: 23px;
+        background-color: #fff;
+        margin: 0 24px;
+        opacity: 1;
+        &.swiper-pagination-bullet-active{
+          background:rgba(255,153,153,1);
+        }
+      }
     }
     &-item{
       width: 100%;
@@ -106,8 +204,11 @@ export default {
             flex: 1;
             text-align: center;
             color: #4A4A4A;
-            &:nth-child(1){
-              border-right: 1px solid #979797;
+            &:nth-child(2){
+              border-left: 1px solid #979797;
+              h4:nth-child(2){
+                color: #E06E6E;
+              }
             }
             p{
               margin-top: 0.52rem;
@@ -120,48 +221,6 @@ export default {
               letter-spacing:2px;
             }
           }
-        }
-      }
-    }
-    .el-carousel__arrow{
-      width:1.38rem;
-      height:1.38rem;
-      background:rgba(216,216,216,0.4);
-      box-shadow:0px 0px 20px 0px rgba(255,255,255,0.5);
-      position: fixed;
-      top: 5.8rem;
-      z-index: 1000;
-      i{
-        font-size: 0.42rem;
-        color: #fff;
-      }
-    }
-    .el-carousel__arrow--left{
-      left: 1.2rem;
-    }
-    .el-carousel__arrow--right{
-      right: 1.2rem;
-    }
-    .el-carousel__indicators{
-      position: fixed;
-      top: 9.15rem;
-      margin-top: 0.2rem;
-      li{
-        border-radius: 50%;
-        overflow: hidden;
-        margin-right: 0.9rem;
-        padding: 0;
-        background-color: #fff;
-        button{
-          width: 0.23rem;
-          height: 0.23rem;
-          border-radius: 50%;
-          background-color: #fff;
-        }
-      }
-      .is-active{
-        button{
-          background-color: #FF9999;
         }
       }
     }

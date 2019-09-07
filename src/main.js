@@ -11,6 +11,8 @@ import store from './store'
 import router from './router'
 
 import getPageTitle from '@/utils/get-page-title' // 获取页面标题
+import echarts from 'echarts' // 引入echar
+Vue.prototype.$echarts = echarts
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

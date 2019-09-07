@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=QkSmXQZxijnqmS45NiVCteH2rqDK9d5u"></script>
+    <!-- <link href="../src/assets/css/video-js.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- <script src="../src/assets/js/video.min.js"></script> -->
     <title><%= webpackConfig.name %></title>
   </head>
   <body>
@@ -14,5 +17,8 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script>
+      // videojs.options.flash.swf = "video-js.swf"
+    </script>
   </body>
 </html>

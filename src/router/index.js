@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // const Home = () => import('@/views/Home')
 import Header from '@/components/systemHead'
+import Footer from '@/components/systemfoot'
 Vue.use(Router)
 export const constantRoutes = [
   {
@@ -12,7 +13,8 @@ export const constantRoutes = [
     path: '/home',
     name: 'home',
     components: {
-      default: () => import('@/views/home')
+      default: () => import('@/views/home'),
+      footer: Footer
     },
     meta: { title: '首页' }
   },
@@ -100,6 +102,10 @@ export const constantRoutes = [
     }
   },
   {
+    path: '/leisure', // 休闲购物
+    redirect: '/leisure/gou'
+  },
+  {
     path: '/leisure/:category', // 休闲购物
     components: {
       default: () => import('@/views/shopping/leisure'),
@@ -107,6 +113,40 @@ export const constantRoutes = [
     },
     meta: {
       title: '休闲购物'
+    }
+  },
+  {
+    path: '/shoppingdetail/:category', // 休闲购物-详情页
+    name: 'shoppingdetail',
+    components: {
+      default: () => import('@/views/shoppingdetail'),
+      header: Header
+    },
+    meta: {
+      title: '休闲购物'
+    }
+  },
+  {
+    path: '/map', // 景区地图
+    components: {
+      default: () => import('@/components/map'),
+      header: Header,
+      footer: Footer
+    },
+    meta: {
+      title: '景区地图',
+      code: true
+    }
+  },
+  {
+    path: '/bdmap/:category', // 景区地图
+    components: {
+      default: () => import('@/views/baiduMap'),
+      footer: Footer
+    },
+    meta: {
+      title: '景区地图',
+      code: true
     }
   },
   {

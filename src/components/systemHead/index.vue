@@ -15,7 +15,7 @@
         <img src="../../assets/img/icons/home.webp" alt=""/>
         <p>首页</p>
       </router-link>
-      <router-link tag="div" to="/shopping" class="header-container-right_icon">
+      <router-link tag="div" to="/leisure" class="header-container-right_icon">
         <img src="../../assets/img/icons/home.webp" alt="" />
         <p>商城</p>
       </router-link>

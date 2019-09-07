@@ -1,50 +1,65 @@
 <!-- 720全景 -->
 <template>
   <div class="overview">
-    <div id="certify">
-      <div class="swiper-container gallery-top">
-        <div class="swiper-wrapper">
-          <router-link tag="div"
-            :to="{name: 'viewdetail',params: {typeId: item.id}}"
-            class="swiper-slide"
-            v-for="item in bannerList"
-            :key="item.id"
-          >
-            <img :src="item.img" />
-            <p>{{ item.text }}</p>
-          </router-link>
-        </div>
-        <div class="swiper-scrollbar"></div>  
-      </div>
-    </div>
-    <!-- <div id="thumbs">
-      <div class="swiper-container gallery-thumbs">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide" v-for="item in bannerList" :key="item.id">
-            <img :src="item.img" />
+    <!-- 主轮播 -->
+    <div class="overview-swiperT">
+      <div id="certify">
+        <div class="swiper-container gallery-top" id="gallery">
+          <div class="swiper-wrapper">
+            <router-link tag="div"
+              :to="{name: 'viewdetail',params: { typeId: item.id }}"
+              class="swiper-slide"
+              v-for="item in bannerList"
+              :key="item.id"
+            >
+              <img :src="item.img" alt="" />
+              <p>{{ item.text }}</p>
+            </router-link>
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
+    <!-- 缩略图 -->
+    <div class="overview-swiperB">
+      <div class="swiper-container thumbs" id="thumbs">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" v-for="(item, index) in bannerList" :key="item.id">
+            <img :src="item.img" alt="">
+            <p>{{ item.name }}</p>
+            <div>
+              <font>{{ index+1 }} /</font>
+              <span>{{ bannerList.length }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-button-prev">
+        <i class="el-icon-arrow-left"></i>
+      </div>
+      <div class="swiper-button-next">
+        <i class="el-icon-arrow-right"></i>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
+import { queryOverviewList } from '../../api/overview'
 export default {
   components: {},
   data() {
     return {
       bannerList: [
         {
-          id: 1,
+          id: 'map',
           name: '景区热度',
           text: '景区最新热度景点示意图',
           img: require('../../assets/img/pic/6.png')
         },
         {
-          id: 2,
+          id: 243,
           name: '东来桃园简介',
           text: '景区最新热度景点示意图',
           img: require('../../assets/img/pic/7.png')
@@ -66,13 +81,43 @@ export default {
           name: '东来荣誉',
           text: '景区最新热度景点示意图',
           img: require('../../assets/img/pic/9.png')
+        },
+        {
+          id: 6,
+          name: '发展历程',
+          text: '景区最新热度景点示意图',
+          img: require('../../assets/img/pic/9.png')
+        },
+        {
+          id: 7,
+          name: '东来荣誉',
+          text: '景区最新热度景点示意图',
+          img: require('../../assets/img/pic/9.png')
         }
       ]
     }
   },
 
   created() {
-    
+    queryOverviewList().then(res => {
+      
+      if(res.code === 2000) {
+        var bannerList= res.datas.map(item => {
+          var obj = {}
+          obj.id = item.cn_content_id
+          obj.name = item.cs_content_name
+          item.text = item.cs_content_name + '示意图'
+          return obj
+        })
+        console.log(bannerList)
+        this.$nextTick(()=>{
+          console.log(this.bannerList)
+          this.initSwiper()
+        })
+        // console.log(this.bannerList)
+      }
+      
+    })
   },
 
   mounted() {
@@ -82,44 +127,46 @@ export default {
   methods: {
     initSwiper() {
       // 缩略图
-      // var thumbsSwiper = new Swiper('#thumbs',{
-      //   spaceBetween: 10,
-      //   slidesPerView: 4,
-      //   watchSlidesVisibility: true
-      // })
-      new Swiper('#certify .swiper-container', {
+      var thumbsSwiper = new Swiper('#thumbs',{
+        spaceBetween: 10,
+        slidesPerView: 5,
+        prevButton: '.swiper-button-prev',
+        nextButton: '.swiper-button-next',
+        loop : true,
+        watchSlidesVisibility: true,   //防止不可点击
+      })
+      var gallerySwiper = new Swiper('#gallery', {
         watchSlidesProgress: true,
         slidesPerView: 'auto',
         centeredSlides: true,
         loop: true,
         loopedSlides: 5,
-        spaceBetween: 10,
-        // thumbs: {
-        //   swiper: thumbsSwiper,
-        // },
+        thumbs: {
+          swiper: thumbsSwiper,
+        },
         on: {
           progress: progress => {
-            var swiper = document.querySelectorAll('.swiper-slide')
+            var swiper = document.querySelectorAll('#gallery .swiper-slide')
             for (let i = 0; i < swiper.length; i++) {
               var slide = swiper[i]
               var slideProgress = swiper[i].progress
               var modify = 1
               if (Math.abs(slideProgress) > 1) {
-                modify = (Math.abs(slideProgress) - 1) * 0.3 + 1
+                modify = (Math.abs(slideProgress) - 1) * 0.01+ 1
               }
-              let translate = slideProgress * modify * 400 + 'px'
-              let scale = 1 - Math.abs(slideProgress) / 9
+              let translate = slideProgress * modify * 8.8 + 'rem'
+              let scale = 1 - Math.abs(slideProgress) / 7
               let zIndex = 999 - Math.abs(Math.round(10 * slideProgress))
               slide.style.transform = 'translateX(' + translate + ') scale(' + scale + ')'
               slide.style.zIndex = zIndex
               slide.style.opacity = 1
-              if (Math.abs(slideProgress) > 3) {
+              if (Math.abs(slideProgress) > 4) {
                 slide.style.opacity = 0
               }
             }
           },
           setTransition: function(transition) {
-            var swiper = document.querySelectorAll('.swiper-slide')
+            var swiper = document.querySelectorAll('#gallery .swiper-slide')
             for (let i = 0; i < swiper.length; i++) {
               let slide = swiper[i]
               slide.style.transition = transition
@@ -133,15 +180,81 @@ export default {
 
 </script>
 <style lang='scss' scoped>
+.overview{
+  margin-top: 2.34rem;
+  &-swiperB{
+    position: relative;
+    width: 13.76rem;
+    height: 2rem;
+    margin: 62px auto;
+    border-radius:7px;
+    overflow: hidden;
+    background-color: #fff;
+    .thumbs{
+      width: 12.36rem;
+      height: 1.8rem;
+      margin: 10px auto;
+      .swiper-slide{
+        width: 2.4rem;
+        height: 1.8rem;
+        margin-right: 10px;
+        position: relative;
+        color: #fff;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+        p, div{
+          position: absolute;
+          left: 0;
+        }
+        p{
+          text-align: center;
+          width: 100%;
+          top: 0.74rem;
+        }
+        div{
+          bottom: 10px;
+          height: 33px;
+          line-height: 33px;
+          width: 100%;
+          padding-right: 15px;
+          text-align: right;
+          span{
+            color: orangered;
+          }
+        }
+      }
+    }
+    .swiper-button-prev, .swiper-button-next{
+      width: 0.7rem;
+      height: 2rem;
+      text-align: center;
+      font-size: 0.5rem;
+      line-height: 2rem;
+      background: #fff;
+      position: absolute;
+      top: 0.22rem;
+      outline: none;
+      color: #444444;
+    }
+    .swiper-button-prev{
+      left: 0;
+    }
+    .swiper-button-next{
+      right: 0;
+    }
+  }
+}
 #certify {
 	position: relative;
   width: 12.4rem;
-  height: 5rem;
   margin: 0.63rem auto;
+  margin-bottom: 0;
 }
 
 #certify .swiper-container {
-	padding-bottom: 60px;
+  width: 12.4rem;
 }
 
 #certify  .swiper-slide {

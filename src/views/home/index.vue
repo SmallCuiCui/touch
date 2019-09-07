@@ -11,10 +11,10 @@
           <font>.8月29日.</font>
         </div>
       </div>
-      <div class="home-header-shop">
+      <router-link tag='div' to="/leisure" class="home-header-shop">
         <img src="../../assets/img/icons/home.webp" alt="">
         <p class="home-header-sjop_text">商城</p>
-      </div>
+      </router-link>
     </div>
     <ul class="home-nav">
       <li v-for="(nav, index) in navList" :key="index" class="home-nav-item">
@@ -32,7 +32,7 @@
         <img src="../../assets/img/icons/hand.webp" alt="">
       </div>
       <div class="home-guidLine_text"><router-link :to="linkUrl" tag="span">查看详情</router-link></div>
-      <div class="home-guidLine_right">
+      <router-link tag="div" to="/map" class="home-guidLine_right">
         <div class="home-guidLine_right_title">
           <h5 class="home-nav-item_title_c">景区地图</h5>
           <p class="home-nav-item_title_e">Scenic Spots</p>
@@ -42,18 +42,9 @@
             <div class="home-guidLine_right_c1_c2_c3"></div>
           </div>
         </div>
-      </div>
+      </router-link>
     </div>
-    <div class="home-footer">
-      <div class="home-footer_icon">
-        <img src="../../assets/img/icons/home.webp" alt="">
-        <p class="home-header-sjop_text">厕所</p>
-      </div>
-      <div class="home-footer_icon">
-        <img src="../../assets/img/icons/home.webp" alt="">
-        <p class="home-header-sjop_text">停车场</p>
-      </div>
-    </div>
+    
   </div>
 </template>
 
@@ -152,7 +143,11 @@ export default {
 .home{
   position: relative;
   height: 100%;
+  width: 100%;
   color: #fff;
+  background-image: url('../../assets/img/bg.jpg');
+  background-repeat:  no-repeat;
+  background-size: 100% 100%;
   &-header{
     display: flex;
     justify-content: space-between;
@@ -207,6 +202,7 @@ export default {
       justify-content: center;
       flex-direction: column;
       font-size:20px;
+      cursor: pointer;
       img{
         margin-bottom: 10px;
         width: 44px;
@@ -215,7 +211,7 @@ export default {
     }
   }
   &-nav{
-    margin-left: 2.1rem;
+    margin-left: 1.8rem;
     margin-top: 0.56rem;
     &-item{
       margin-bottom: 0.34rem;
@@ -236,14 +232,16 @@ export default {
       &_title{
         height: 0.98rem;
         cursor: pointer;
+        letter-spacing:2px;
         &.center{
-          margin-left: 6.5rem;
-          height: 0.9rem;
+          height: 1.72rem;
+          margin-left: 5.8rem;
           h5{
-            height: 0.7rem;
+            height: 0.5rem;
             font-size: 40px;
-            line-height: 0.7rem;
+            line-height: 0.5rem;
             letter-spacing: 3px;
+            margin-top: 0.5rem;
           }
           p{
             font-size: 0.2rem;
@@ -256,6 +254,7 @@ export default {
           font-weight: 500;
           height: 24px;
           line-height: 24px;
+          text-align: center;
         }
         p{
           height: 25px;
@@ -280,7 +279,7 @@ export default {
   }
   &-guidLine{
     position: absolute;
-    top: 4.5rem;
+    top: 4.55rem;
     left: 0;
     display: flex;
     justify-content: space-between;
@@ -301,7 +300,7 @@ export default {
       height: 1.07rem;
       cursor: pointer;
       position: absolute;
-      left: 7.3rem;
+      left: 6.5rem;
       line-height: 1.07rem;
       font-size: 0.6rem;
     }
@@ -309,6 +308,7 @@ export default {
       margin-right: 1.46rem;
       display: flex;
       align-items: center;
+      cursor: pointer;
       &_title{
         height: 0.98rem;
         margin-right: 0.3rem;
@@ -351,28 +351,6 @@ export default {
             background-size: cover;
           }
         }
-      }
-    }
-  }
-  &-footer{
-    margin-bottom: 30px;
-    position: absolute;
-    right: 52px;
-    bottom: 28px;
-    &_icon{
-      display: flex;
-      flex-direction: column;
-      float: right;
-      font-size:20px;
-      margin-left: 50px;
-      img{
-        margin-top: 20px;
-        margin-bottom: 10px;
-        width: 44px;
-        height: 44px;
-      }
-      p{
-        margin-bottom: 22px;
       }
     }
   }

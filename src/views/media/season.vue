@@ -51,6 +51,7 @@ export default {
 .season{
   height:8.56rem;
   width: 100%;
+  margin-top: 1.65rem;
   background:linear-gradient(269deg,rgba(112,157,235,0.04) 0%,rgba(0,0,0,0.61) 100%);
   &-box{
     padding: 1.10rem 1.95rem;

@@ -44,7 +44,7 @@ export default {
 </script>
 <style lang='scss' scoped>
 .shopping{
-    margin-top: 1rem;
+    margin-top: 2.58rem;
     color: rgba(255, 255, 255, .9);
     &-container{
       width: 15rem;

@@ -40,7 +40,7 @@ export default {
 </script>
 <style lang='scss' scoped>
   .media{
-    margin-top: 1rem;
+    margin-top: 2.58rem;
     &-container{
       width: 15rem;
       height: 6rem;
