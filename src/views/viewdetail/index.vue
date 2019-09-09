@@ -67,15 +67,17 @@ export default {
         position: absolute;
         display: inline-block;
         bottom: 0.15rem;
-        left: -0.6rem;
+        left: -0.8rem;
         height: auto;
         color: #fff;
         p{
           font-size: 20px;
-          width: 50px;
-          padding-left: 20px;
+          width: 70px;
+          padding-left: 40px;
           line-height: 26px;
           padding-bottom: 0.72rem;
+          background: url(../../assets/img/icons/jiantou.png) no-repeat;
+          background-position: left 1.7rem;
         }
       }
     }

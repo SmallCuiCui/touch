@@ -6,17 +6,17 @@
     </div>
     <div class="header-container-title" v-show="title">
       <div class="header-container-title_img">
-        <img src="../../assets/flower.webp" alt="">
+        <img src="../../assets/img/flower.webp" alt="">
       </div>
       <h4 class="header-container-title_text">{{ title }}</h4>
     </div>
     <div class="header-container-right">
       <router-link tag="div" to="/home" class="header-container-right_icon">
-        <img src="../../assets/img/icons/home.webp" alt=""/>
+        <img src="../../assets/img/icons/home.png" alt=""/>
         <p>首页</p>
       </router-link>
       <router-link tag="div" to="/leisure" class="header-container-right_icon">
-        <img src="../../assets/img/icons/home.webp" alt="" />
+        <img src="../../assets/img/icons/shop.png" alt="" />
         <p>商城</p>
       </router-link>
     </div>

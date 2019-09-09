@@ -1,8 +1,9 @@
 <template>
+<!-- 全景漫游 -->
   <div id="home-container" class="home">
     <div class="home-header">
       <div class="home-header-logo">
-        <img src="../../assets/flower.webp" alt="">东来桃源
+        <img src="../../assets/img/flower.webp" alt="">东来桃源
       </div>
       <div class="home-header-news">
         <img src="../../assets/img/icons/start.webp" alt="">
@@ -12,35 +13,38 @@
         </div>
       </div>
       <router-link tag='div' to="/leisure" class="home-header-shop">
-        <img src="../../assets/img/icons/home.webp" alt="">
+        <img src="../../assets/img/icons/home.png" alt="">
         <p class="home-header-sjop_text">商城</p>
       </router-link>
     </div>
-    <ul class="home-nav">
-      <li v-for="(nav, index) in navList" :key="index" class="home-nav-item">
-        <div class="home-nav-item_img">
-          <img :src="nav.img" alt="">
+    <div class="home-nav">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide home-nav-item" :dataIndex="nav.id" v-for="(nav, index) in navList" :index="index" :key="index">
+            <div class="home-nav-item_img">
+              <img :src="nav.img" alt="">
+            </div>
+            <div :class="nav.isChecked ? 'center home-nav-item_title' : 'home-nav-item_title'">
+              <h5 class="home-nav-item_title_c">{{ nav.name }}</h5>
+              <p class="home-nav-item_title_e">{{ nav.ename }}</p>
+            </div>
+          </div>
         </div>
-        <div :class="nav.isChecked ? 'center home-nav-item_title' : 'home-nav-item_title'" @click="chageNav(index)">
-          <h5 class="home-nav-item_title_c">{{ nav.name }}</h5>
-          <p class="home-nav-item_title_e">{{ nav.ename }}</p>
-        </div>
-      </li>
-    </ul>
+      </div>
+    </div>
     <div class="home-guidLine">
       <div class="home-guidLine_left">
         <img src="../../assets/img/icons/hand.webp" alt="">
       </div>
-      <div class="home-guidLine_text"><router-link :to="linkUrl" tag="span">查看详情</router-link></div>
+      <div class="home-guidLine_text">
+        <router-link :to="linkUrl" tag="span">查看详情</router-link>
+      </div>
       <router-link tag="div" to="/map" class="home-guidLine_right">
         <div class="home-guidLine_right_title">
           <h5 class="home-nav-item_title_c">景区地图</h5>
           <p class="home-nav-item_title_e">Scenic Spots</p>
         </div>
         <div class="home-guidLine_right_c1">
-          <div class="home-guidLine_right_c1_c2">
-            <div class="home-guidLine_right_c1_c2_c3"></div>
-          </div>
         </div>
       </router-link>
     </div>
@@ -49,25 +53,25 @@
 </template>
 
 <script>
-// import { mapState, mapGetters, mapMutations } from 'vuex'
+import Swiper from 'swiper'
+import 'swiper/dist/css/swiper.min.css'
 export default {
   name: 'Home',
   data() {
     return {
-      // guideList: '',
       navList: [
         {
           name: '首页',
           ename: 'Tourist guide',
           path: '/home',
-          isChecked: false,
+          isChecked: true,
           img: require('../../assets/img/pic/1.png')
         },
         {
           name: '720全景漫游',
           ename: 'panoramic roaming',
           path: '/scenery',
-          isChecked: false,
+          isChecked: true,
           img: require('../../assets/img/pic/2.png')
         },
         {
@@ -81,14 +85,14 @@ export default {
           name: '视频图库',
           ename: 'Tourist guide',
           path: '/media',
-          isChecked: false,
+          isChecked: true,
           img: require('../../assets/img/pic/4.png')
         },
         {
           name: '游购景区',
           ename: 'Tourist guide',
           path: '/shopping',
-          isChecked: false,
+          isChecked: true,
           img: require('../../assets/img/pic/5.png')
         }
       ],
@@ -96,45 +100,75 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters([
-    //   'checkItem',
-    //   'guideList'
-    // ])
   },
   watch: {
 
   },
   mounted() {
+    this.initSwiper()
   },
   created() {
-    // console.log(this.$store.state.home.checkId)
   },
   methods: {
-    // ...mapMutations(['toggleCheck']),
     chageNav(index) {
-      var list = []
-      var count = 0
-      this.navList = this.navList.map((item, dex) => {
-        if (index === dex) {
-          item.isChecked = true
-          list[2] = item
-          this.linkUrl = item.path
-        } else {
-          item.isChecked = false
-        }
-        return item
-      })
-      this.navList.forEach((item, dex) => {
-        if (!item.isChecked) {
-          list[count] = item
-          count++
-          if (count === 2) {
-            count++
+      // var list = []
+      // var count = 0
+      // this.navList = this.navList.map((item, dex) => {
+      //   if (index === dex) {
+      //     item.isChecked = true
+      //     list[2] = item
+      //     this.linkUrl = item.path
+      //   } else {
+      //     item.isChecked = false
+      //   }
+      //   return item
+      // })
+      // this.navList.forEach((item, dex) => {
+      //   if (!item.isChecked) {
+      //     list[count] = item
+      //     count++
+      //     if (count === 2) {
+      //       count++
+      //     }
+      //   }
+      // })
+      // this.navList = list
+
+       this.navList = this.navList.map((item, ind) => {
+          if(ind == index) {
+            item.isChecked = true
+            this.linkUrl = item.path
+          } else {
+            item.isChecked = false
+          }
+          return item
+        })
+        // this.$forceUpdate();
+        console.log(this.navList)
+    },
+    initSwiper() {
+      let _this = this
+      var myswiper = new Swiper('.swiper-container',{
+        direction : 'vertical',
+        loop: true,
+        initialSlide :2,
+        slidesPerView: 5,  // 一次显示全部
+        slidesPerGroup: 1,  // 一次滑动切换一张
+        centeredSlides:true,  //active slide 居中
+        spaceBetween: 20,  // 轮播项之间的间隙
+        observer:true,//修改swiper自己或子元素时，自动初始化swiper 
+        observeParents:false,//修改swiper的父元素时，自动初始化swiper 
+        on: {
+          slideChangeTransitionStart: function(){
+            console.log(this)
+            this.update()
+            let currentIndex = this.slides.eq(this.activeIndex)[0].getAttribute('index')
+            _this.chageNav(currentIndex)
           }
         }
       })
-      this.navList = list
     }
+    
   }
 }
 </script>
@@ -212,18 +246,22 @@ export default {
   }
   &-nav{
     margin-left: 1.8rem;
-    margin-top: 0.56rem;
+    margin-top: -0.2rem;
+    .swiper-container{
+      width: 100%;
+      height: 8.6rem;
+    }
     &-item{
-      margin-bottom: 0.34rem;
-      height: 0.98rem;
+      // height: 1.72rem;
+      transform: scale(0.9);
       display: flex;
+      align-items: center;  
       color:rgba(255,255,255,1);
       &_img{
         display: inline-block;
-        margin-right: 0.3rem;
-        height: 0.98rem;
-        width: 0.98rem;
-        cursor: pointer;
+        height: 1.72rem;
+        width: 1.72rem;
+        transform: scale(0.64);
         img{
           height: 100%;
           width: 100%;
@@ -231,15 +269,14 @@ export default {
       }
       &_title{
         height: 0.98rem;
-        cursor: pointer;
         letter-spacing:2px;
         &.center{
           height: 1.72rem;
-          margin-left: 5.8rem;
+          margin-left: 6rem;
           h5{
             height: 0.5rem;
             font-size: 40px;
-            line-height: 0.5rem;
+            line-height: 0.3rem;
             letter-spacing: 3px;
             margin-top: 0.5rem;
           }
@@ -250,7 +287,8 @@ export default {
         h5{
           margin-top: 0.24rem;
           margin-bottom: 0.05rem;
-          font-size: 0.24rem;
+          font-size: 0.26rem;
+          letter-spacing: 2px;
           font-weight: 500;
           height: 24px;
           line-height: 24px;
@@ -263,18 +301,25 @@ export default {
         }
       }
     }
-    li:nth-child(3){
-      height: 1.72rem;
+    .swiper-slide-active,.swiper-slide-duplicate-active{
+        transform: scale(1);
+        div{
+          transform: scale(1);
+        }
+    }
+    .swiper-slide-prev{
+      align-items: flex-start;
+      margin-left: -0.55rem;
       .home-nav-item_img{
-        width: 1.72rem;
-        height: 1.72rem;
+        margin-top: -0.3rem;
       }
     }
-    li:nth-child(4), li:nth-child(2){
-      margin-left: 0.5rem;
-    }
-    li:nth-child(1), li:nth-child(5){
-      margin-left: 1rem;
+    .swiper-slide-next{
+      align-items: flex-end;
+      margin-left: -0.55rem;
+      .home-nav-item_img{
+        margin-bottom: -0.3rem;
+      }
     }
   }
   &-guidLine{
@@ -282,7 +327,6 @@ export default {
     top: 4.55rem;
     left: 0;
     display: flex;
-    justify-content: space-between;
     height: 2.3rem;
     width: 100%;
     align-items: center;
@@ -300,6 +344,7 @@ export default {
       height: 1.07rem;
       cursor: pointer;
       position: absolute;
+      z-index: 100;
       left: 6.5rem;
       line-height: 1.07rem;
       font-size: 0.6rem;
@@ -309,6 +354,10 @@ export default {
       display: flex;
       align-items: center;
       cursor: pointer;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 100;
       &_title{
         height: 0.98rem;
         margin-right: 0.3rem;
@@ -330,27 +379,9 @@ export default {
         width: 2.28rem;
         height: 2.28rem;
         border-radius: 50%;
-        background: rgba(216,216,216,0.4);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        &_c2{
-          width: 1.98rem;
-          height: 1.98rem;
-          line-height: 1.98rem;
-          border-radius: 50%;
-          overflow: hidden;
-          background: rgba(216,216,216,0.56);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          &_c3{
-            width: 1.76rem;
-            height: 1.76rem;
-            background: url('../../assets/img/pic/1.png') no-repeat;
-            background-size: cover;
-          }
-        }
+        overflow: hidden;
+        background: url('../../assets/img/pic/home_map.png') no-repeat;
+        background-size: cover;
       }
     }
   }

@@ -6,8 +6,7 @@
       <div id="certify">
         <div class="swiper-container gallery-top" id="gallery">
           <div class="swiper-wrapper">
-            <router-link
-              tag="div"
+            <router-link tag="div"
               :to="{name: 'viewdetail',params: { typeId: item.id }}"
               class="swiper-slide"
               v-for="item in bannerList"
@@ -146,28 +145,30 @@ export default {
           swiper: thumbsSwiper,
         },
         on: {
-          progress: function(progress) {
-            for (var i = 0; i < this.slides.length; i++) {
-              var slide = this.slides.eq(i);
-              var slideProgress = this.slides[i].progress;
-              var modify = 1;
+          progress: progress => {
+            var swiper = document.querySelectorAll('#gallery .swiper-slide')
+            for (let i = 0; i < swiper.length; i++) {
+              var slide = swiper[i]
+              var slideProgress = swiper[i].progress
+              var modify = 1
               if (Math.abs(slideProgress) > 1) {
-                modify = (Math.abs(slideProgress) - 1) * 0.01 + 1;
+                modify = (Math.abs(slideProgress) - 1) * 0.01+ 1
               }
-              var translate = slideProgress * modify * 850 + 'px';
-              var scale = 1 - Math.abs(slideProgress) / 5;
-              var zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
-              slide.transform('translateX(' + translate + ') scale(' + scale + ')');
-              slide.css('zIndex', zIndex);
-              slide.css('opacity', 1);
-              if (Math.abs(slideProgress) > 3) {
-                slide.css('opacity', 0);
+              let translate = slideProgress * modify * 8.8 + 'rem'
+              let scale = 1 - Math.abs(slideProgress) / 7
+              let zIndex = 999 - Math.abs(Math.round(10 * slideProgress))
+              slide.style.transform = 'translateX(' + translate + ') scale(' + scale + ')'
+              slide.style.zIndex = zIndex
+              slide.style.opacity = 1
+              if (Math.abs(slideProgress) > 4) {
+                slide.style.opacity = 0
               }
             }
           },
           setTransition: function(transition) {
-            for (let i = 0; i < this.slides.length; i++) {
-              let slide = this.slides[i]
+            var swiper = document.querySelectorAll('#gallery .swiper-slide')
+            for (let i = 0; i < swiper.length; i++) {
+              let slide = swiper[i]
               slide.style.transition = transition
             }
           }

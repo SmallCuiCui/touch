@@ -187,6 +187,8 @@ export default {
         width: 12rem;
         height: 5.87rem;
         margin: 0 auto;
+        border-radius: 7px;
+        overflow: hidden;
         .swiper-slide{
           width: 100%;
           height: 100%;

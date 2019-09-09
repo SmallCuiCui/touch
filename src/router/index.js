@@ -21,7 +21,11 @@ export const constantRoutes = [
   {
     path: '/scenery', // 全景漫游
     name: 'scenery',
-    component: () => import('@/views/scenery'),
+    components: {
+      default: () => import('@/views/scenery'),
+      header: Header,
+      footer: Footer
+    },
     meta: {
       title: '全景漫游'
     }
@@ -147,6 +151,16 @@ export const constantRoutes = [
     meta: {
       title: '景区地图',
       code: true
+    }
+  },
+  {
+    path: '/test',
+    components: {
+      default: () => import('@/views/test'),
+      header: Header
+    },
+    meta: {
+      title: '景区概况'
     }
   },
   {

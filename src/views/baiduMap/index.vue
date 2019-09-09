@@ -8,11 +8,11 @@
       </div>
       <div class="bdmap-header_icons">
         <router-link tag="div" to="/home" class="bdmap-header_icons_icon">
-          <img src="../../assets/img/icons/home.webp" alt=""/>
+          <img src="../../assets/img/icons/home.png" alt=""/>
           <p>首页</p>
         </router-link>
         <router-link tag="div" to="/leisure" class="bdmap-header_icons_icon">
-          <img src="../../assets/img/icons/home.webp" alt="" />
+          <img src="../../assets/img/icons/shop.png" alt="" />
           <p>商城</p>
         </router-link>
       </div>
@@ -148,11 +148,15 @@ export default {
         right: 0.2rem;
         background:rgba(74,144,226,0.24);
         opacity:0.2;
+        background-image: url(../../assets/img/icons/enter.png);
+        background-repeat: no-repeat; 
       }
     }
     &_icons{
       float: right;
       display: flex;
+      justify-content: flex-end;
+      align-items: center;
       margin-right: 0.92rem;
       &_icon{
         margin-left: 0.5rem;

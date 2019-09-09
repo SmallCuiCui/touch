@@ -9,11 +9,11 @@
     </div>
     <div class="footer-link">
       <router-link tag="div" to="/bdmap/washroom" class="footer-link_icon">
-        <img src="../../assets/img/icons/home.webp" alt="">
+        <img src="../../assets/img/icons/foot_toile.png" alt="">
         <p class="header-sjop_text">厕所</p>
       </router-link>
       <router-link tag="div" to="/bdmap/park" class="footer-link_icon">
-        <img src="../../assets/img/icons/home.webp" alt="">
+        <img src="../../assets/img/icons/foot_park.png" alt="">
         <p class="header-sjop_text">停车场</p>
       </router-link>
       <div class="footer-link_cv">便捷功能点</div>
@@ -76,8 +76,10 @@ export default {
     color: #fff;
     padding-right: 0.4rem;
     background:linear-gradient(270deg,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.05) 100%);
+    border-right: 3px solid rgba(74,144,226,1);
     &_icon{
       display: flex;
+      align-items: center;
       flex-direction: column;
       float: right;
       font-size:20px;
@@ -99,9 +101,9 @@ export default {
       font-size: 16px;
       letter-spacing: 1px;
       position: absolute;
-      right: 0;
+      right: -3px;
       top: -32px;
-      border-right: 2px solid rgba(80,227,194,1);
+      border-right: 3px solid rgba(74,144,226,1);
       padding-right: 10px;
     }
   }

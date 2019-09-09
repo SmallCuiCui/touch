@@ -4,28 +4,21 @@
     <div class="culture-container">
       <div class="swiper-container" id="gallery">
         <div class="swiper-wrapper">
-          <div class="swiper-slide culture-container-item" v-for="item in 4" :key="item.id">
+          <div class="swiper-slide culture-container-item" v-for="item in actList" :key="item.id">
             <div class="culture-container-item_pic">
-              <p class="culture-container-item_pic_title">活动标题</p>
+              <img :src="item.imgUrl" alt="">
+              <p class="culture-container-item_pic_title">{{ item.actName }}</p>
             </div>
             <div class="culture-container-item_text">
-              <h5 class="culture-container-item_text_title">精彩活动</h5>
+              <h5 class="culture-container-item_text_title">{{ item.actName }}</h5>
               <ul>
-                <li>
+                <li v-for="(act, index) in item.activity" :key="index">
                   <p>演出日</p>
-                  <h4 style="color: #F5A623;">(周日到周四)</h4>
+                  <h4 style="color: #F5A623;">({{act.csavtivityweekends}})</h4>
                   <p>演出时间</p>
-                  <h4>09:00-10:00</h4>
+                  <h4>{{ act.cdavtivitytime }}</h4>
                   <p>演出地点</p>
-                  <h4>游客服务中心广场</h4>
-                </li>
-                <li>
-                  <p>演出日</p>
-                  <h4 style="">(周日到周四)</h4>
-                  <p>演出时间</p>
-                  <h4>09:00-10:00</h4>
-                  <p>演出地点</p>
-                  <h4>游客服务中心广场</h4>
+                  <h4>{{ act.csavtivitylocation }}</h4>
                 </li>
               </ul>
             </div>
@@ -40,49 +33,42 @@
         <img src="../../assets/img/icons/rightc.webp" alt="">
       </div>
     </div>
-    <!-- <el-carousel class="culture-container" :interval="5000" arrow="always">
-      <el-carousel-item class="culture-container-item" v-for="item in 4" :key="item">
-        <div class="culture-container-item_pic">
-          <p class="culture-container-item_pic_title">活动标题</p>
-        </div>
-        <div class="culture-container-item_text">
-          <h5 class="culture-container-item_text_title">精彩活动</h5>
-          <ul>
-            <li>
-              <p>演出日</p>
-              <h4 style="color: #F5A623;">(周日到周四)</h4>
-              <p>演出时间</p>
-              <h4>09:00-10:00</h4>
-              <p>演出地点</p>
-              <h4>游客服务中心广场</h4>
-            </li>
-            <li>
-              <p>演出日</p>
-              <h4 style="">(周日到周四)</h4>
-              <p>演出时间</p>
-              <h4>09:00-10:00</h4>
-              <p>演出地点</p>
-              <h4>游客服务中心广场</h4>
-            </li>
-          </ul>
-        </div>
-      </el-carousel-item>
-    </el-carousel> -->
+    <div class="culture-icon">
+      <span></span>
+    </div>
   </div>
 </template>
 
 <script>
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
+import { queryLeatureList } from '@/api/shopping'
+import { baseUrl } from '@/config'
 export default {
   components: {},
 
   data() {
     return {
+      actList: ''
     }
   },
 
-  created() {},
+  created() {
+    queryLeatureList().then(res => {
+      // console.log(res)
+      if(res.code === 2000) {
+        this.actList = res.datas.map(item => {
+          var obj = {}
+          obj.actName = item.csactivityname
+          obj.imgUrl = baseUrl + item.cspictureurl
+          obj.actid = item.cnactivitycode
+          obj.activity = item.activity
+          return obj
+        })
+        console.log(this.actList)
+      }
+    })
+  },
 
   mounted() {
     this.initSwiper()
@@ -166,14 +152,19 @@ export default {
       display: flex;
       &_pic{
         flex: 1;
-        background-image: url(../../assets/img/pic/17.png);
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
         position: relative;
+        overflow: hidden;
+        img{
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+        }
         &_title{
           position: absolute;
           bottom: 0;
           left: 0;
+          z-index: 1;
           width: 100%;
           padding-left: 0.6rem;
           font-size: 0.42rem;
@@ -223,6 +214,17 @@ export default {
           }
         }
       }
+    }
+  }
+  &-icon{
+    position: absolute;
+    bottom: 0.28rem;
+    left: 0;
+    text-align: center;
+    span{
+      padding-left: 0.37rem;
+      padding-top: 0.63rem; 
+      // background: url(../../assets/img/icons/bottom_icon.png) no-repeat;
     }
   }
 }
