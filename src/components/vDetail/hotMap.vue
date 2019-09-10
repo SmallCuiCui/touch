@@ -1,9 +1,7 @@
 <!-- 景区实时热力图 -->
 <template>
   <div class="hotmap">
-    <div class="hotmap-container" id="map">
-
-    </div>
+    <div id="map" class="hotmap-container"></div>
   </div>
 </template>
 
@@ -16,26 +14,19 @@ export default {
 
   data() {
     return {
-      dataPoints: [
-        { 
-          x: 100,  
-          y: 100,
-          radius: 100, 
-          value: 10 
-        },
-        {  
-          x: 150,  
-          y: 150,
-          radius: 100, 
-          value: 10 
-        }
-      ]  
+      points: [
+        // {
+        //   x: 100,
+        //   y: 100,
+        //   radius: 100,
+        //   value: 10
+        // }
+      ]
     }
   },
 
   created() {
-    
-},
+  },
 
   mounted() {
     this.initMap()
@@ -44,38 +35,31 @@ export default {
   methods: {
     initMap() {
       var config = {
-        container: document.getElementById('map'),
-        radius: 100,    
-        maxOpacity: .5,
-        minOpacity: 0,
-        blur: .75,    
-        gradient: {     
-        '.5': 'green',
-        '.8': 'blue',
-        '.95': 'red'
-        }
-      }
-      var heatmapInstance = Heatmap.create({
         container: document.getElementById('map')
-      })
-      var points = []
+        // gradient: {
+        //   '.5': 'rgba(255, 0, 0, 0.5)',
+        //   '.8': 'rgba(255, 0, 0, 0.8)',
+        //   '.95': 'rgba(255, 0, 0, 1)'
+        // }
+      }
+      var heatmapInstance = Heatmap.create(config)
       var max = 0
-      var width = 600
-      var height = 400
+      var width = 1476
+      var height = 750
       var len = 200
       while (len--) {
         var val = Math.floor(Math.random() * 100)
         max = Math.max(max, val)
         var point = {
           x: Math.floor(Math.random() * width),
-          y: Math.floor(Math.random() * height),
+          y: Math.floor(Math.random() * height) + 300,
           value: val
         }
-        points.push(point)
+        this.points.push(point)
       }
       var data = {
         max: max,
-        data: points
+        data: this.points
       }
       // 因为data是一组数据,web切图报价所以直接setData
       heatmapInstance.setData(data)

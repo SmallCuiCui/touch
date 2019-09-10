@@ -2,17 +2,17 @@
 <template>
   <div class="header-container">
     <div class="header-container-left" >
-      <img src="../../assets/img/icons/left.webp" @click="goBack" alt="">
+      <img src="../../assets/img/icons/left.webp" @click="goBack" alt="" />
     </div>
     <div class="header-container-title" v-show="title">
       <div class="header-container-title_img">
-        <img src="../../assets/img/flower.webp" alt="">
+        <img src="../../assets/img/flower.webp" alt="" />
       </div>
       <h4 class="header-container-title_text">{{ title }}</h4>
     </div>
     <div class="header-container-right">
       <router-link tag="div" to="/home" class="header-container-right_icon">
-        <img src="../../assets/img/icons/home.png" alt=""/>
+        <img src="../../assets/img/icons/home.png" alt="" />
         <p>首页</p>
       </router-link>
       <router-link tag="div" to="/leisure" class="header-container-right_icon">
@@ -31,14 +31,13 @@ export default {
       title: ''
     }
   },
-
-  created() {
-    this.title = this.$route.params.seasonId === "videos" ? '视频' : this.$route.meta.title
-  },
   watch: {
-    $route(to,from){
-      this.title = this.$route.params.seasonId === "videos" ? '视频' : this.$route.meta.title
+    $route(to, from) {
+      this.title = this.$route.params.seasonId === 'videos' ? '视频' : this.$route.meta.title
     }
+  },
+  created() {
+    this.title = this.$route.params.seasonId === 'videos' ? '视频' : this.$route.meta.title
   },
   mounted() {},
 
@@ -102,6 +101,7 @@ export default {
       }
       p{
         font-size: 0.2rem;
+        text-align: center;
       }
     }
   }

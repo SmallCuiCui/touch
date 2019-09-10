@@ -17,6 +17,8 @@
               <p>{{ item.text }}</p>
             </router-link>
           </div>
+          <div class="swiper-button-prev my-button-disabled"></div>
+          <div class="swiper-button-next"></div>
         </div>
       </div>
     </div>
@@ -24,7 +26,7 @@
     <div class="overview-swiperB">
       <div class="swiper-container thumbs" id="thumbs">
         <div class="swiper-wrapper">
-          <div class="swiper-slide" v-for="(item, index) in bannerList" :key="item.id">
+          <div v-for="(item, index) in bannerList" :key="item.id"  class="swiper-slide">
             <img :src="item.img" alt="">
             <p>{{ item.name }}</p>
             <div>
@@ -81,19 +83,19 @@ export default {
           id: 5,
           name: '东来荣誉',
           text: '景区最新热度景点示意图',
-          img: require('../../assets/img/pic/9.png')
+          img: require('../../assets/img/pic/6.png')
         },
         {
           id: 6,
           name: '发展历程',
           text: '景区最新热度景点示意图',
-          img: require('../../assets/img/pic/9.png')
+          img: require('../../assets/img/pic/7.png')
         },
         {
           id: 7,
           name: '东来荣誉',
           text: '景区最新热度景点示意图',
-          img: require('../../assets/img/pic/9.png')
+          img: require('../../assets/img/pic/8.png')
         }
       ]
     }
@@ -110,9 +112,7 @@ export default {
           item.text = item.cs_content_name + '示意图'
           return obj
         })
-        console.log(bannerList)
         this.$nextTick(()=>{
-          console.log(this.bannerList)
           this.initSwiper()
         })
         // console.log(this.bannerList)
@@ -131,8 +131,10 @@ export default {
       var thumbsSwiper = new Swiper('#thumbs',{
         spaceBetween: 10,
         slidesPerView: 5,
-        prevButton: '.swiper-button-prev',
-        nextButton: '.swiper-button-next',
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
         loop : true,
         watchSlidesVisibility: true,   //防止不可点击
       })
@@ -142,6 +144,10 @@ export default {
         centeredSlides: true,
         loop: true,
         loopedSlides: 5,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
         thumbs: {
           swiper: thumbsSwiper,
         },
@@ -250,6 +256,9 @@ export default {
   width: 12.4rem;
   margin: 0.63rem auto;
   margin-bottom: 0;
+  .swiper-button-prev, .swiper-button-next{
+    opacity: 0;
+  }
 }
 
 #certify .swiper-container {

@@ -24,7 +24,8 @@
             <div class="home-nav-item_img">
               <img :src="nav.img" alt="">
             </div>
-            <div :class="nav.isChecked ? 'center home-nav-item_title' : 'home-nav-item_title'">
+            <!-- <div :class="nav.isChecked ? 'center home-nav-item_title' : 'home-nav-item_title'"> -->
+            <div class="home-nav-item_title">
               <h5 class="home-nav-item_title_c">{{ nav.name }}</h5>
               <p class="home-nav-item_title_e">{{ nav.ename }}</p>
             </div>
@@ -143,8 +144,6 @@ export default {
           }
           return item
         })
-        // this.$forceUpdate();
-        console.log(this.navList)
     },
     initSwiper() {
       let _this = this
@@ -154,21 +153,19 @@ export default {
         initialSlide :2,
         slidesPerView: 5,  // 一次显示全部
         slidesPerGroup: 1,  // 一次滑动切换一张
-        centeredSlides:true,  //active slide 居中
+        centeredSlides: true,  //active slide 居中
         spaceBetween: 20,  // 轮播项之间的间隙
-        observer:true,//修改swiper自己或子元素时，自动初始化swiper 
-        observeParents:false,//修改swiper的父元素时，自动初始化swiper 
+        observer: true,  //修改swiper自己或子元素时，自动初始化swiper 
+        observeParents: false,  //修改swiper的父元素时，自动初始化swiper 
         on: {
-          slideChangeTransitionStart: function(){
-            console.log(this)
+          slideChangeTransitionStart: function() {
             this.update()
-            let currentIndex = this.slides.eq(this.activeIndex)[0].getAttribute('index')
+            const currentIndex = this.slides.eq(this.activeIndex)[0].getAttribute('index')
             _this.chageNav(currentIndex)
           }
         }
       })
     }
-    
   }
 }
 </script>
@@ -255,7 +252,7 @@ export default {
       // height: 1.72rem;
       transform: scale(0.9);
       display: flex;
-      align-items: center;  
+      align-items: center;
       color:rgba(255,255,255,1);
       &_img{
         display: inline-block;
@@ -270,20 +267,6 @@ export default {
       &_title{
         height: 0.98rem;
         letter-spacing:2px;
-        &.center{
-          height: 1.72rem;
-          margin-left: 6rem;
-          h5{
-            height: 0.5rem;
-            font-size: 40px;
-            line-height: 0.3rem;
-            letter-spacing: 3px;
-            margin-top: 0.5rem;
-          }
-          p{
-            font-size: 0.2rem;
-          }
-        }
         h5{
           margin-top: 0.24rem;
           margin-bottom: 0.05rem;
@@ -305,6 +288,20 @@ export default {
         transform: scale(1);
         div{
           transform: scale(1);
+        }
+        .home-nav-item_title{
+          height: 1.72rem;
+          margin-left: 6rem;
+          h5{
+            height: 0.5rem;
+            font-size: 40px;
+            line-height: 0.3rem;
+            letter-spacing: 3px;
+            margin-top: 0.5rem;
+          }
+          p{
+            font-size: 0.2rem;
+          }
         }
     }
     .swiper-slide-prev{
@@ -385,5 +382,6 @@ export default {
       }
     }
   }
+
 }
 </style>

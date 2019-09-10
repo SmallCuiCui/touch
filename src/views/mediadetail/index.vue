@@ -51,6 +51,7 @@
 <script>
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
+import { queryImages } from '@/api/media'
 export default {
   components: {},
 
