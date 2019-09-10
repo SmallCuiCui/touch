@@ -160,7 +160,7 @@ export default {
               if (Math.abs(slideProgress) > 1) {
                 modify = (Math.abs(slideProgress) - 1) * 0.01 + 1;
               }
-              var translate = slideProgress * modify * 850 + 'px';
+              var translate = slideProgress * modify * 8.5 + 'rem';
               var scale = 1 - Math.abs(slideProgress) / 5;
               var zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
               slide.transform('translateX(' + translate + ') scale(' + scale + ')');
@@ -259,6 +259,12 @@ export default {
   .swiper-button-prev, .swiper-button-next{
     opacity: 0;
   }
+  .swiper-container{
+    width: 12.4rem;
+  }
+  .swiper-wrapper{
+    width: 12.4rem;
+  }
 }
 
 #certify  .swiper-slide {
@@ -266,7 +272,6 @@ export default {
 	height: 5rem;
 	background: #fff;
   box-shadow: 0 8px 30px #ddd;
-  position: relative;
   border-radius: 0.32rem;
   overflow: hidden;
 }

@@ -289,6 +289,7 @@ export default {
         div{
           transform: scale(1);
         }
+        // 选中居中的样式
         .home-nav-item_title{
           height: 1.72rem;
           margin-left: 6rem;

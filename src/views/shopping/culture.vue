@@ -49,7 +49,37 @@ export default {
 
   data() {
     return {
-      actList: ''
+      actList: [
+        {
+          actName: '活动1名称',
+          imgUrl: require('../../assets/img/pic/17.png'),
+          actid: 1,
+          activity: [
+            {
+              csavtivityweekends: '周三-周四',
+              cdavtivitytime: '18：00-20：30',
+              csavtivitylocation: '金牛广场'
+            }
+          ]
+        },
+        {
+          actName: '活动2名称',
+          imgUrl: require('../../assets/img/pic/14.png'),
+          actid: 2,
+          activity: [
+            {
+              csavtivityweekends: '周三-周四',
+              cdavtivitytime: '18：00-20：30',
+              csavtivitylocation: '金牛广场'
+            },
+            {
+              csavtivityweekends: '周一-周五',
+              cdavtivitytime: '18：00-20：30',
+              csavtivitylocation: '金牛广场'
+            }
+          ]
+        }
+      ]
     }
   },
 
@@ -65,7 +95,6 @@ export default {
           obj.activity = item.activity
           return obj
         })
-        console.log(this.actList)
       }
     })
   },

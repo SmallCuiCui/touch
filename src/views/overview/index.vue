@@ -160,7 +160,7 @@ export default {
               if (Math.abs(slideProgress) > 1) {
                 modify = (Math.abs(slideProgress) - 1) * 0.01 + 1;
               }
-              var translate = slideProgress * modify * 850 + 'px';
+              var translate = slideProgress * modify * 8.5 + 'rem';
               var scale = 1 - Math.abs(slideProgress) / 5;
               var zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
               slide.transform('translateX(' + translate + ') scale(' + scale + ')');
