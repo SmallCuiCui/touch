@@ -136,13 +136,13 @@ export default {
       
     }
     .swiper-button-prev, .swiper-button-next{
-      width: 1.38rem;
-      height: 1.38rem;
+      width: 1.5rem;
+      height: 1.5rem;
       position: absolute;
       top: 2.25rem;
       border: none;
       color: #fff;
-      background:rgba(216,216,216,0.17);
+      background:none;
       border-radius: 50%;
       outline: none;
       img{

@@ -154,16 +154,6 @@ export const constantRoutes = [
     }
   },
   {
-    path: '/test',
-    components: {
-      default: () => import('@/views/test'),
-      header: Header
-    },
-    meta: {
-      title: '景区概况'
-    }
-  },
-  {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true

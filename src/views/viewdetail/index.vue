@@ -63,6 +63,7 @@ export default {
       display: flex;
       flex-direction: column;
       position: relative;
+      overflow: hidden;
       &_show{
         position: absolute;
         display: inline-block;

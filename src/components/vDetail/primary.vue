@@ -6,9 +6,13 @@
       <div></div>
     </div>
     <div class="primary_text" v-html="content"></div>
-    <!-- <div class="primary_img">
+    <div class="primary_img">
       <img src="../../assets/img/pic/12.png" alt="">
-    </div> -->
+    </div>
+    <div class="primary_text" v-html="content"></div>
+    <div class="primary_img">
+      <img src="../../assets/img/pic/12.png" alt="">
+    </div>
   </div>
 </template>
 
@@ -30,7 +34,7 @@ export default {
       console.log(res)
       if(res.code === 2000) {
         this.title = res.datas.csContentName
-        this.content = res.datas.csSubmContent
+        // this.content = res.datas.csSubmContent
       }
     })
   },
@@ -45,6 +49,8 @@ export default {
 .primary{
   padding-top: 0.46rem;
   height: 100%;
+  width: 102%;
+  overflow: auto;
   &_head{
     p{
       text-align: center;
@@ -65,7 +71,7 @@ export default {
   }
   &_text{
     width:10.97rem;
-    height: 5.5rem;
+    // height: 5.5rem;
     font-size:15px;
     margin: 0 auto;
     font-family:PingFangSC;

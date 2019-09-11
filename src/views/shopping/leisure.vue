@@ -19,31 +19,17 @@
       <div class="leisure-container-box">
         <h5>特色店铺</h5>
         <p class="leisure-container-box_dis">当你有一个傻瓜时，你会很痛苦；你有 50 个傻瓜是最幸福的，吃饭、睡觉、上厕所排着队去的；你有一个聪明人时很带劲，你有 50 个聪明人实际上是最痛苦的，</p>
-        <ol class="leisure-container-box-ol">
-          <router-link tag="li" :to="{name: 'shoppingdetail', params: {category: 1}}" class="leisure-container-box-ol_item">
-            <img src="../../assets/img/pic/20.png" alt=""/>
-            <p>店名7</p>
+        <ol class="leisure-container-box-ol" v-infinite-scroll="loadMore" style="overflow:auto">
+          <router-link
+            tag="li"
+            v-for="item in dataList"
+            :key="item.cnId"
+            :to="{name: 'shoppingdetail', params: {category: item.cnId}}"
+            class="leisure-container-box-ol_item"
+          >
+            <img :src="item.imgUrl" alt=""/>
+            <p>{{ item.name }}</p>
           </router-link>
-          <router-link :to="{name: 'shoppingdetail', params: {category: 2}}" class="leisure-container-box-ol_item">
-            <img src="../../assets/img/pic/21.png" alt=""/>
-            <p>店名1</p>
-          </router-link>
-          <li class="leisure-container-box-ol_item">
-            <img src="../../assets/img/pic/22.png" alt=""/>
-            <p>店名1</p>
-          </li>
-          <li class="leisure-container-box-ol_item">
-            <img src="../../assets/img/pic/23.png" alt=""/>
-            <p>店名1</p>
-          </li>
-          <li class="leisure-container-box-ol_item">
-            <img src="../../assets/img/pic/24.png" alt=""/>
-            <p>店名1</p>
-          </li>
-          <li class="leisure-container-box-ol_item">
-            <img src="../../assets/img/pic/25.png" alt=""/>
-            <p>店名1</p>
-          </li>
         </ol>
       </div>
     </div>
@@ -51,26 +37,113 @@
 </template>
 
 <script>
+import { queryLeatureList } from '@/api/shopping'
+import { baseUrl } from '@/config'
 export default {
-  components: {},
-
   data() {
     return {
+      cateId: '',
+      pageSize: 6,
+      pageNum: 1,
+      dataList: [
+        {
+          cnId: '1',
+          name: '店铺1',
+          imgUrl: require('../../assets/img/pic/20.png')
+        },
+        {
+          cnId: '2',
+          name: '店铺2',
+          imgUrl: require('../../assets/img/pic/21.png')
+        },
+        {
+          cnId: '3',
+          name: '店铺3',
+          imgUrl: require('../../assets/img/pic/22.png')
+        },
+        {
+          cnId: '4',
+          name: '店铺4',
+          imgUrl: require('../../assets/img/pic/23.png')
+        },
+        {
+          cnId: '5',
+          name: '店铺5',
+          imgUrl: require('../../assets/img/pic/24.png')
+        },
+        {
+          cnId: '6',
+          name: '店铺6',
+          imgUrl: require('../../assets/img/pic/25.png')
+        }
+      ],
+      islastPage: false,
+      first: true
     }
   },
-
-  created() {},
-
+  created() {
+    this.getCategory(this.$route)
+    this.queryList()
+  },
+  watch: {
+    $route(to, from) {
+      // 路由切换时，清空数据并置请求为第一页
+      this.dataList = []
+      this.pageNum = 1
+      this.getCategory(to)
+      this.queryList()
+    }
+  },
   mounted() {},
 
-  methods: {}
+  methods: {
+    getCategory(target){
+      switch(target.params.category) {
+        case 'gou':
+          this.cateId = 2
+          break
+        case 'chi':
+          this.cateId = 1
+          break
+        case 'zhu':
+          this.cateId = 0
+          break
+      }
+    },
+    queryList() {
+      queryLeatureList({
+        "id": this.cateId,
+        "pageNum": this.pageNum,
+        "pageSize": this.pageSize
+      }).then(res => {
+        if(res.code === 2000) {
+          this.islastPage = res.datas.isLastPage
+          res.datas.list.map(item => {
+            var obj = {}
+            obj.cnId = item.cnId,
+            obj.name = item.csContentName
+            obj.imgUrl = baseUrl + item.csPictureUrl
+            this.dataList.push(obj)
+          })
+        }
+      })
+    },
+    loadMore(){
+      // console.log(this.islastPage)
+      if(!this.islastPage) {
+        if(this.first) {
+          this.first = false
+        } else {
+          this.pageNum ++
+          this.queryList()
+        }
+      }
+    }
+  }
 }
 
 </script>
 <style lang='scss'>
-.router-link-exact-active{
-  background-color: #fff !important;
-}
 .leisure{
   margin-top: 1.9rem;
   position: relative;
@@ -91,7 +164,12 @@ export default {
         background:rgba(241,241,241,1);
         border-radius:0px 8px 8px 0px;
         border:1px solid rgba(151,151,151,1);
+        border-left: none;
+        cursor: pointer;
         margin-top: 0.24rem;
+        &.router-link-exact-active{
+          background-color: #fff;
+        }
         div{
           width: 0.33rem;
           height: 0.33rem;

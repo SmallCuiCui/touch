@@ -3,7 +3,7 @@
   <div class="footer">
     <div class="footer_code" v-if="showCode">
       <div class="footer_code_img">
-        <img src="../../assets/img/pic/17.png" alt="">
+        <img src="../../assets/img/code.jpg" alt="">
       </div>
       <p>关注公众号自助语音导游</p>
     </div>
@@ -55,15 +55,17 @@ export default {
       width: 1.83rem;
       height: 1.83rem;
       margin-bottom: 0.2rem;
+      padding: 10px;
       img{
         width: 100%;
         height: 100%;
         vertical-align: top;
+        background-color: #fff;
       }
     }
     p{
       width: 100%;
-      text-align: canter;
+      text-align: center;
       font-size: 17px;
     }
   }
@@ -88,8 +90,8 @@ export default {
       img{
         margin-top: 20px;
         margin-bottom: 10px;
-        width: 44px;
-        height: 44px;
+        width: 50px;
+        height: 50px;
       }
       p{
         margin-bottom: 22px;

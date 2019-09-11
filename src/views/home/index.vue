@@ -26,7 +26,7 @@
             </div>
             <!-- <div :class="nav.isChecked ? 'center home-nav-item_title' : 'home-nav-item_title'"> -->
             <div class="home-nav-item_title">
-              <h5 class="home-nav-item_title_c">{{ nav.name }}</h5>
+              <h5 class="home-nav-item_title_c">{{ nav.sname }}</h5>
               <p class="home-nav-item_title_e">{{ nav.ename }}</p>
             </div>
           </div>
@@ -38,7 +38,7 @@
         <img src="../../assets/img/icons/hand.webp" alt="">
       </div>
       <div class="home-guidLine_text">
-        <router-link :to="linkUrl" tag="span">查看详情</router-link>
+        <router-link :to="linkUrl"><span>{{ linkName }}</span></router-link>
       </div>
       <router-link tag="div" to="/map" class="home-guidLine_right">
         <div class="home-guidLine_right_title">
@@ -63,6 +63,7 @@ export default {
       navList: [
         {
           name: '首页',
+          sname: '首页',
           ename: 'Tourist guide',
           path: '/home',
           isChecked: true,
@@ -70,6 +71,7 @@ export default {
         },
         {
           name: '720全景漫游',
+          sname: '全景漫游',
           ename: 'panoramic roaming',
           path: '/scenery',
           isChecked: true,
@@ -77,6 +79,7 @@ export default {
         },
         {
           name: '景区概况',
+          sname: '景区概况',
           ename: 'Tourist guide',
           path: '/overview',
           isChecked: true,
@@ -84,6 +87,7 @@ export default {
         },
         {
           name: '视频图库',
+          sname: '视频图库',
           ename: 'Tourist guide',
           path: '/media',
           isChecked: true,
@@ -91,12 +95,14 @@ export default {
         },
         {
           name: '游购景区',
+          sname: '游购景区',
           ename: 'Tourist guide',
           path: '/shopping',
           isChecked: true,
           img: require('../../assets/img/pic/5.png')
         }
       ],
+      linkName: '查看详情',
       linkUrl: '/overview'
     }
   },
@@ -135,15 +141,22 @@ export default {
       // })
       // this.navList = list
 
-       this.navList = this.navList.map((item, ind) => {
-          if(ind == index) {
-            item.isChecked = true
-            this.linkUrl = item.path
+      this.navList = this.navList.map((item, ind) => {
+        if(ind == index) {
+          item.isChecked = true
+          this.linkUrl = item.path
+          if(index == 1) {
+            this.linkName = '720'
+            document.querySelector('.home-guidLine_text span').classList.add('big')
           } else {
-            item.isChecked = false
+            this.linkName = '查看详情'
+            document.querySelector('.home-guidLine_text span').classList.remove('big')
           }
-          return item
-        })
+        } else {
+          item.isChecked = false
+        }
+        return item
+      })
     },
     initSwiper() {
       let _this = this
@@ -236,8 +249,8 @@ export default {
       cursor: pointer;
       img{
         margin-bottom: 10px;
-        width: 44px;
-        height: 44px;
+        width: 50px;
+        height: 50px;
       }
     }
   }
@@ -346,6 +359,13 @@ export default {
       left: 6.5rem;
       line-height: 1.07rem;
       font-size: 0.6rem;
+      a{
+        color: #fff;
+      }
+      span.big{
+        font-size: 120px;
+        letter-spacing: 7px;
+      }
     }
     &_right{
       margin-right: 1.46rem;

@@ -95,8 +95,8 @@ export default {
       flex-direction: column;
       cursor: pointer;
       img{
-        width: 0.44rem;
-        height: 0.44rem;
+        width: 0.5rem;
+        height: 0.5rem;
         margin-bottom: 0.1rem;
       }
       p{

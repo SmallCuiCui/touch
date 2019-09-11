@@ -81,6 +81,7 @@ export default {
           &_line{
             width:3.5rem;
             height:1px;
+            background-color: rgba(255, 255, 255, .5);
             margin: 0.3rem auto;
           }
           p{
@@ -104,12 +105,13 @@ export default {
           position: absolute;
           width: 100%;
           height: 100%;
-          top: 0%0;
+          top: 2px;
           left: 0;
           filter: blur(2px);
+          background-size: 100% 100%;
         }
         .images{
-          background: rgba(0,0,0,0.4) url('../../assets/img/pic/14.png') no-repeat;
+          background: url('../../assets/img/pic/14.png') no-repeat;
         }
         .videos{
           background: url('../../assets/img/pic/15.png') no-repeat;

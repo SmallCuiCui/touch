@@ -135,7 +135,7 @@ export default {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         },
-        loop : true,
+        // loop : true,
         watchSlidesVisibility: true,   //防止不可点击
       })
       var gallerySwiper = new Swiper('#gallery', {
@@ -158,10 +158,10 @@ export default {
               var slideProgress = this.slides[i].progress;
               var modify = 1;
               if (Math.abs(slideProgress) > 1) {
-                modify = (Math.abs(slideProgress) - 1) * 0.01 + 1;
+                modify = (Math.abs(slideProgress) - 1) * 0.3 + 1;
               }
-              var translate = slideProgress * modify * 8.5 + 'rem';
-              var scale = 1 - Math.abs(slideProgress) / 5;
+              var translate = slideProgress * modify * 2 + 'rem';
+              var scale = 1 - Math.abs(slideProgress) / 7;
               var zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
               slide.transform('translateX(' + translate + ') scale(' + scale + ')');
               slide.css('zIndex', zIndex);

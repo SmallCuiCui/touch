@@ -2,17 +2,19 @@
 <template>
   <div class="mediadetail">
     <div class="mediadetail-box">
-
       <div class="mediadetail-box-swiperT">
         <div class="swiper-container gallery" id="gallery">
           <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="item in bannerList" :key="item.id">
-              <img v-if="mediaIsimg" :src="item.img" alt=""/>
-              <video v-else id="my-video" class="video-js" controls preload="auto" poster="./m.jpg" data-setup="{}">
-                <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
-                <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm">
-                <source src="http://vjs.zencdn.net/v/oceans.ogv" type="video/ogg">
+            <div class="swiper-slide" v-for="(item, index) in bannerList" :key="item.bannnerId">
+              <!-- 图库 -->
+              <img :src="item.bannerUrl"  v-if="mediaIsimg" alt=""/>
+              <!-- 图库 -->
+              <video class="video-js" v-else preload="auto" poster="./m.jpg" @click="playVideo(false, index)">
+                <source :src="item.bannerUrl" type="video/mp4">
+                <source :src="item.bannerUrl" type="video/webm">
+                <source :src="item.bannerUrl" type="video/ogg">
               </video>
+              <div v-if="!mediaIsimg && !isPlayVideo" class="videoBtn" @click="playVideo(true, index)"></div>
             </div>
           </div>
         </div>
@@ -27,11 +29,11 @@
       <div class="mediadetail-box-swiperB">
         <div class="swiper-container thumbs" id="thumbs">
           <div class="swiper-wrapper">
-            <div class="swiper-slide active-nav" v-for="(item, index) in bannerList" :key="item.id">
-              <img :src="item.img" alt="">
-              <p>图库2</p>
+            <div class="swiper-slide active-nav" v-for="(item, index) in bannerList" :key="item.bannnerId">
+              <img :src="item.bannerImg" alt="">
+              <p>{{ item.bannerName }}</p>
               <div>
-                <font>{{ index+1 }} /</font>
+                <font>{{ index + 1 }} /</font>
                 <span>{{ bannerList.length }}</span>
                 </div>
             </div>
@@ -51,76 +53,118 @@
 <script>
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
-import { queryImages } from '@/api/media'
+import { queryImages, queryVideos } from '@/api/media'
+import { baseUrl } from '@/config'
 export default {
-  components: {},
-
   data() {
     return {
       mediaIsimg: true,
-      videos:[
-        {
-          id:1,
-          title:'test2',
-          youtobeURL:'http://player.youku.com/embed/XMzcwNTY3NTM2MA',
-          speaker:'harry',
-          likes:101,
-          views:0,
-          describe:'good'
-        }
-      ],
+      isPlayVideo: false,
       bannerList: [
         {
-          id: 1,
-          name: '景区热度',
+          bannnerId: 1,
+          bannerName: '景区热度',
           text: '景区最新热度景点示意图',
-          img: require('../../assets/img/pic/6.png')
+           bannerImg: require('../../assets/img/pic/6.png'),
+          bannerUrl: require('../../assets/img/pic/6.png')
         },
         {
-          id: 2,
-          name: '东来桃园简介',
+          bannnerId: 2,
+          bannerName: '东来桃园简介',
           text: '景区最新热度景点示意图',
-          img: require('../../assets/img/pic/7.png')
+           bannerImg: require('../../assets/img/pic/7.png'),
+          bannerUrl: require('../../assets/img/pic/7.png')
         },
         {
-          id: 3,
-          name: '东来桃园文化',
+          bannnerId: 3,
+          bannerName: '东来桃园文化',
           text: '景区最新热度景点示意图',
-          img: require('../../assets/img/pic/8.png')
+           bannerImg: require('../../assets/img/pic/8.png'),
+          bannerUrl: require('../../assets/img/pic/8.png')
         },
         {
-          id: 4,
-          name: '发展历程',
+          bannnerId: 4,
+          bannerName: '发展历程',
           text: '景区最新热度景点示意图',
-          img: require('../../assets/img/pic/9.png')
+           bannerImg: require('../../assets/img/pic/9.png'),
+          bannerUrl: require('../../assets/img/pic/9.png')
         },
         {
-          id: 5,
-          name: '东来荣誉',
+          bannnerId: 5,
+          bannerName: '东来荣誉',
           text: '景区最新热度景点示意图',
-          img: require('../../assets/img/pic/9.png')
+           bannerImg: require('../../assets/img/pic/6.png'),
+          bannerUrl: require('../../assets/img/pic/6.png')
         },
         {
-          id: 6,
-          name: '发展历程',
+          bannnerId: 6,
+          bannerName: '发展历程',
           text: '景区最新热度景点示意图',
-          img: require('../../assets/img/pic/9.png')
+           bannerImg: require('../../assets/img/pic/7.png'),
+          bannerUrl: require('../../assets/img/pic/7.png')
         },
         {
           id: 7,
-          name: '东来荣誉',
+          bannerName: '东来荣誉',
           text: '景区最新热度景点示意图',
-          img: require('../../assets/img/pic/9.png')
+          bannerImg: require('../../assets/img/pic/8.png'),
+          bannerUrl: require('../../assets/img/pic/8.png')
         }
       ]
     }
   },
 
   created() {
+    // 视屏库
     if(this.$route.params.seasonId === 'videos') {
       this.mediaIsimg = false
-    } else {
+      queryVideos().then(res => {
+        if(res.code === 2000) {
+          this.bannerList = res.datas.list.map(item => {
+            var obj = {}
+            obj.bannnerId = item.cnId
+            obj.bannerName = item.csVideoName
+            // 后端给。。
+            obj.bannerImg =  'http://img0.imgtn.bdimg.com/it/u=2854320073,4263146037&fm=26&gp=0.jpg'
+            obj.bannerUrl = baseUrl + item.csVideoUrl
+            return obj
+          })
+        }
+      })
+    } else {  // 图片库
       this.mediaIsimg = true
+      let seasonId = this.$route.params.seasonId
+      let cateId = ''
+      switch(seasonId) {
+        case 'spring':
+          cateId = 1
+          break
+        case 'summer':
+          cateId = 2
+          break
+        case 'fall':
+          cateId = 3
+          break
+        case 'winter':
+          cateId = 4
+          break
+      }
+      queryImages({
+        cnSceneryId: 15,
+        cnLocationId: cateId
+      }).then(res => {
+        if(res.code === 2000) {
+          this.bannerList = res.datas.list.map(item => {
+            var obj = {}
+            obj.bannnerId = item.cnId
+            obj.bannerName = item.csPictureName
+            obj.bannerImg = baseUrl + item.csPictureUrl
+            obj.bannerUrl = baseUrl + item.csPictureUrl
+            return obj
+          })
+          console.log(this.bannerList)
+        }
+      })
     }
   },
   watch: {
@@ -134,9 +178,14 @@ export default {
   },
   mounted() {
     this.initSwiper()
+    let videos = document.querySelectorAll('video')
+    // videos.forEach((video) => {
+    //     this.getPosterImg(video)
+    // });
   },
   methods: {
     initSwiper() {
+      var _this = this
       var thumbsSwiper = new Swiper('#thumbs',{
         spaceBetween: 10,
         slidesPerView: 5,
@@ -146,7 +195,6 @@ export default {
         watchSlidesVisibility: true,//防止不可点击
       })
       var gallerySwiper = new Swiper('#gallery',{
-        spaceBetween: 10,
         // autoplay: true,
         // loop : true,
         thumbs: {
@@ -155,19 +203,42 @@ export default {
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
+        },
+        on: {
+          transitionEnd(){
+            // 视屏切换时暂停所有视屏
+            if(!_this.mediaIsimg){
+              var myVideos = document.querySelectorAll('video')
+              _this.isPlayVideo = false
+              myVideos.forEach(item => {
+                item.pause()
+              })
+            }
+          }
         }
       })
-      if(!this.mediaIsimg) {
-        this.initVideo()
+    },
+    playVideo(tag, index) {
+      this.isPlayVideo = tag
+      var myVideos = document.querySelectorAll('video')
+      var currentVideo = myVideos[index]
+      if(this.isPlayVideo) {
+        currentVideo.play()
+      } else {
+        currentVideo.pause()
       }
     },
-    initVideo() {
-      // console.log(videojs)
-      // var myPlayer = videojs('my-video')
-      // videojs("my-video").ready(function(){
-      //   var myPlayer = this;
-      //   myPlayer.play();
-      // })
+    getPosterImg(video, scale = 0.8){
+      video.addEventListener('loadeddata', function(e) {
+        // 拿到图片
+        let canvas = document.createElement('canvas')
+        canvas.width = video.videoWidth * scale
+        canvas.height = video.videoHeight * scale
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)
+        let src = canvas.toDataURL('image/png')
+        // 设置属性
+        video.setAttribute('poster', src)
+      })
     }
   }
 }
@@ -179,6 +250,7 @@ export default {
   width: 100%;
   margin-top: 1.65rem;
   background:rgba(255,255,255,0);
+  background:url(../../assets/img/bg_season.png) 100% 100%;
   box-shadow:8px 8px 50px 0px rgba(0,0,0,0.5);
   &-box{
     padding-top: 25px;
@@ -202,16 +274,26 @@ export default {
             width: 12rem;
             height: 5.87rem;
           }
+          .videoBtn{
+            position: absolute;
+            top: 2.5rem;
+            left: 5.56rem;
+            width: 0.88rem;
+            height: 0.88rem;
+            cursor: pointer;
+            background: url(../../assets/img/icons/videos.webp) no-repeat;
+          }
         }
       }
       .swiper-button-prev, .swiper-button-next{
-        width: 1.38rem;
-        height: 1.38rem;
+        width: 1.4rem;
+        height: 1.4rem;
         position: absolute;
         top: 2.25rem;
         border: none;
         color: #fff;
-        background:rgba(216,216,216,0.17);
+        // background:rgba(216,216,216,0.17);
+        background: none;
         border-radius: 50%;
         outline: none;
         img{
@@ -233,6 +315,7 @@ export default {
       width: 13.76rem;
       height: 2rem;
       margin: 24px auto;
+      margin-bottom: 0;
       border-radius:7px;
       overflow: hidden;
       background-color: #fff;

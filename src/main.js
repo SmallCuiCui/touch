@@ -9,13 +9,13 @@ import '@/assets/css/reset.scss' // 全局 css
 import App from './App'
 import store from './store'
 import router from './router'
+import vueiInfinite from 'vue-infinite-scroll'
 
 import getPageTitle from '@/utils/get-page-title' // 获取页面标题
-import echarts from 'echarts' // 引入echar
-Vue.prototype.$echarts = echarts
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(vueiInfinite)
 
 var deviceWidth
 setHtmlFont()
@@ -37,7 +37,6 @@ new Vue({
 })
 
 router.beforeEach(async(to, from, next) => {
-  // set page title
   document.title = getPageTitle(to.meta.title)
   next()
 })
